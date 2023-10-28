@@ -7,6 +7,7 @@ import pickle
 ############## despesas
 ## Funções
 
+# Cadastrar
 def despesa_cadastrar():
   global despesas_dicionario
   
@@ -47,12 +48,15 @@ def despesa_cadastrar():
     pickle.dump(despesas_dicionario, arq_despesa)
     
   input('Tecle ENTER para continuar!')
+''''''
 
-
+# Salvar
 def despesa_salvar():
   with open('despesa.dat', 'wb') as arq_despesa:
     pickle.dump(despesas_dicionario, arq_despesa)
+''''''
 
+# Vizualizar
 def despesa_vizualizar():
   print('Todas as despesas:\n')
   try:
@@ -66,10 +70,9 @@ def despesa_vizualizar():
 		
   print('\n')
   input('Aperte ENTER para continuar\n')
-
+''''''
 
 ### Pesquisar
-  
 def despesa_pesquisar():
   print('Pesquisa')
   print('\n')
@@ -93,7 +96,9 @@ def despesa_pesquisar():
   except:
     print('Mês não encontrado')
   input('Aperte ENTER para continuar\n')
-  
+''''''
+
+# Editar
 def despesa_editar():
   print('\n')
   despesa_vizualizar()
@@ -119,8 +124,9 @@ def despesa_editar():
   except:
     print('Mês não encontrado')
   input('Aperte ENTER para continuar\n')
-  
+''''''
 
+# Excluir
 def despesa_excluir():
   print('\n')
   despesa_vizualizar()
@@ -144,9 +150,13 @@ def despesa_excluir():
 
 ''''''
 
+
+
 ##############################
 ##### Programa Principal #####
 ##############################
+
+
 try:
   arq_despesa = open('despesa.dat', 'rb')
   despesas_dicionario = pickle.load(arq_despesa)
@@ -158,7 +168,7 @@ except:
 
 
 
-## despesa principal
+
 def modulo_despesa():
   system('clear')
   operacao = ''
@@ -188,3 +198,6 @@ def modulo_despesa():
       system('clear')
     elif operacao == '0':
       system('clear')
+    else:
+      system('clear')
+      print('Digite uma operação válida!')

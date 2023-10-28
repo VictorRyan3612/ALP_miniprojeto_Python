@@ -9,13 +9,13 @@ from Funcoes import Funcoes_Orcamento
 from Funcoes import Funcoes_Despesa
 from Funcoes import Funcoes_Dividas
 from os import system
-import pickle
 
 
-meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','outubro','novembro','dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
+
+# meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','outubro','novembro','dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
 
 ######################################
-########## Programa principal ##########
+########## Programa principal ########
 ######################################
 
 
@@ -44,7 +44,4 @@ while menu != '0':
   elif menu == '3':
     Funcoes_Dividas.modulo_divida()
 
-## Salvando no arquivo
-
-
-print('Fim do programa')
+print('\nFim do programa')
