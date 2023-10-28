@@ -10,7 +10,7 @@ for chave in computador.keys():
 print('\n\n')
 
 
-# copia o dicionário para backup
+# copia o dicionário1 para backup
 computador_backup1 = computador.copy() 
 
 ### Apagar
@@ -20,7 +20,7 @@ del computador[apagar]
 
 
 
-# copia o dicionário para backup
+# copia o dicionário2 para backup
 computador_backup2 = computador_backup1.copy()
 
 ## Editar
