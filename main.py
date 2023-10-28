@@ -11,9 +11,6 @@ from Funcoes import Funcoes_Dividas
 from os import system
 import pickle
 
-
-meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','outubro','novembro','dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
-
 ######################################
 ########## Programa principal ##########
 ######################################
@@ -22,6 +19,16 @@ meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto'
 Funcoes_Menus.informacoes()
 input('Aperte ENTER\n')
 
+
+## Carregando no arquivo
+# try:
+#   arq_divida = open("divida.dat", "rb")
+#   dividas_dicionario = pickle.load(arq_divida)
+#   arq_divida.close()
+# except:
+#   arq_divida = open("divida.dat", "wb")
+#   arq_divida.close()
+#   dividas_dicionario = {}
 
 
 menu = ''

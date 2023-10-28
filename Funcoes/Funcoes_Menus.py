@@ -2,8 +2,8 @@
 def informacoes():
   print('''
         Alunos:
-        Artur Morais Candeia, matrícula: 20220042257
-        Victor Ryan Galvão Silva, matrícula: 20220035163
+        Artur Morais Candeia
+        Victor Ryan Galvão Silva
 
         projeto: SIG-Finance
 
