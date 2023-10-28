@@ -1,6 +1,7 @@
 from Funcoes import Funcoes_Menus
 from os import system
 ############## Orcamento
+
 def orcamento_cadastrar():
   print()
 
