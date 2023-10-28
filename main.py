@@ -21,14 +21,14 @@ input('Aperte ENTER\n')
 
 
 ## Carregando no arquivo
-try:
-  arq_divida = open("divida.dat", "rb")
-  dividas_dicionario = pickle.load(arq_divida)
-  arq_divida.close()
-except:
-  arq_divida = open("divida.dat", "wb")
-  arq_divida.close()
-  dividas_dicionario = {}
+# try:
+#   arq_divida = open("divida.dat", "rb")
+#   dividas_dicionario = pickle.load(arq_divida)
+#   arq_divida.close()
+# except:
+#   arq_divida = open("divida.dat", "wb")
+#   arq_divida.close()
+#   dividas_dicionario = {}
 
 
 menu = ''
@@ -52,8 +52,6 @@ while menu != '0':
     Funcoes_Dividas.modulo_divida()
 
 ## Salvando no arquivo
-arq_divida = open("divida.dat", "wb")
-pickle.dump(dividas_dicionario, arq_divida)
-arq_divida.close()
+
 
 print('Fim do programa')

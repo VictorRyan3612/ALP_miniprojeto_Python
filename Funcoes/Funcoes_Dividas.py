@@ -1,52 +1,54 @@
 from Funcoes import Funcoes_Menus
 from os import system
 import pickle
+
+
+
 ############## Dividas
+## Funções
 
 def divida_cadastrar():
-  # dividas_dicionario = {}
-  # dividas_principal = []
-  # divida = []
-  Q_dividas = int(input(f'Quantas dividas você quer cadastrar?\n'))
+  global dividas_dicionario
   
   mes = input('As dividas são de qual mês?\n')
+  Q_dividas = int(input(f'Quantas dividas você quer cadastrar?\n'))
+  
+  matriz = []
+  
   for i in range(1, Q_dividas + 1):
-    # divida = []
+    divida = []
     print('\n')
     nomeDivida = input(f'Nome da dívida {i}:\n')
     valor = int(input(f'Quanto é o valor de {nomeDivida}?\n'))
-    
-    # divida.append(nomeDivida)
-    # divida.append(valor)
-    # dividas_principal.append(divida)
-    # dividas_dicionario [mes] = dividas_principal
-    dividas_dicionario [mes] = [nomeDivida,valor]
-#Escrever
-  # with open('divida.dat', 'ab') as arq_divida:
-  #   arquivo = str(dividas_dicionario) + '\n'
-  #   pickle.dump(arquivo, arq_divida)
-  #   #arq_divida.write(arquivo)
-  #   # pickle.dump(dividas_dicionario, arq_divida)
-  # input('\nAperte ENTER para continuar\n')
 
+  
+    divida += [nomeDivida,valor]
+    matriz += [divida]
+  dividas_dicionario [mes] = matriz
+
+  
+  arq_divida = open("divida.bin", "wb")
+  pickle.dump(dividas_dicionario, arq_divida)
+  arq_divida.close()
+  
 
 ### Vizualizar
 def divida_vizualizar():
   print('Módulo de relatório\n')
   
-  try: #Exibir de arquivo
-    with open('divida.dat', 'rb') as arq_divida:
-      print(pickle.load(arq_divida))
-      
-      
-  except:
-    system('clear')
-    print('Arquivo ainda não existe')
+  arq_divida = open("divida.bin", "rb")
+  arquivo2 = pickle.load(arq_divida)
+  arq_divida.close()
+  print(arquivo2)
+
+  with:
+    
   print('\n\n\n')
   input('Aperte ENTER para continuar\n')
 
 
 ### Pesquisar
+  
 '''
 def divida_pesquisar():
   print('Pesquisa')
@@ -64,6 +66,22 @@ def divida_pesquisar():
         print("Nome não encontrado!")
       print()
 '''
+
+##############################
+##### Programa Principal #####
+##############################
+
+try:
+  arq_divida = open("divida.bin", "rb")
+  dividas_dicionario = pickle.load(arq_divida)
+  arq_divida.close()
+except:
+  arq_divida = open("divida.bin", "wb")
+  arq_divida.close()
+  dividas_dicionario = {}
+
+
+
 ## Divida principal
 def divida_editar():
   print()
@@ -96,3 +114,8 @@ def modulo_divida():
     
     elif operacao == '0':
       system('clear')
+
+## Salvando em arquivo
+# arq_divida = open("divida.bin", "ab")
+# pickle.dump(dividas_dicionario, arq_divida)
+# arq_divida.close()
