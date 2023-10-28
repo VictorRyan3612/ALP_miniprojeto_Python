@@ -1,6 +1,0 @@
-Março: [['Feira', 70],['Luz', 70]]
-Março: [['Água', 60]]
-Março: [['internet', 70], ['Alugel', 350]]
-Março: [['Luz', 60]]
-Agosto: [['Luz', 70]]
-Setembro: [['Luz', 120]]

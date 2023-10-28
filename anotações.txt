@@ -1,11 +1,3 @@
-#### Coisas para fazer:
-https://replit.com/join/iffdccdunk-victorryan
-usar o pickle (anotações em pickle.py)
-
-pegar os conjuntos de funções (menus, orçamento, despesas, dividas)
-colocar em arquivos.py diferentes e no programa principal importar o nome do arquivo.py
-
-
 ## Descrição do tema
 
 SIG-Finance: Um Sistema de Controle de Finanças Domésticas
@@ -18,17 +10,3 @@ computador que realize o acompanhamento do fluxo financeiro em uma residência, 
 o descontrole de gastos.
 
 
-
-elif menu =='0':
-#     print('Fim do programa\n')
-#   menu = input('escolha outra opção\n')
-# print('Fim do programa')
-
-# debito = int(input('Quanto dinheiro você tem?\n'))
-# qcontas = int(input('Quantas despesas você tem mensalmmente?\n'))
-
-# contas = []
-
-# for i in range(1,qcontas+1):
-#   nomeconta = input(f'Nome despesa {i}\n')
-#   contas = int(input(f'Quanto é o valor de {nomeconta}?\n'))

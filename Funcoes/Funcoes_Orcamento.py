@@ -10,6 +10,10 @@ def orcamento_vizualizar():
 def orcamento_pesquisar():
   print()
 
+def orcamento_editar():
+  print()
+def orcamento_exluir():
+  print()
 def modulo_orcamento():
   system('clear')
   operacao = ''
@@ -28,7 +32,10 @@ def modulo_orcamento():
 
     elif operacao == '3':
       orcamento_pesquisar()
-      
+    elif operacao == '4':
+      orcamento_editar()
+    elif operacao == '5':
+      orcamento_exluir()  
     elif operacao == '0':
       system('clear')
       print()

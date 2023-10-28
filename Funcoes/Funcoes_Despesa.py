@@ -9,6 +9,10 @@ def despesa_vizualizar():
 
 def despesa_pesquisar():
   print()
+def despesa_editar():
+  print()
+def despesa_exluir():
+  print()
 def modulo_despesa():
   system('clear')
   operacao = ''
@@ -27,7 +31,10 @@ def modulo_despesa():
 
     elif operacao == '3':
       despesa_pesquisar()
-      
+    elif operacao == '4':
+      despesa_editar()
+    elif operacao == '5':
+      despesa_exluir()
     elif operacao == '0':
       system('clear')
       print()

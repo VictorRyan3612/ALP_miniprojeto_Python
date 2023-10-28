@@ -1,0 +1,23 @@
+
+elif menu =='0':
+#     print('Fim do programa\n')
+#   menu = input('escolha outra opção\n')
+# print('Fim do programa')
+
+# debito = int(input('Quanto dinheiro você tem?\n'))
+# qcontas = int(input('Quantas despesas você tem mensalmmente?\n'))
+
+# contas = []
+
+# for i in range(1,qcontas+1):
+#   nomeconta = input(f'Nome despesa {i}\n')
+#   contas = int(input(f'Quanto é o valor de {nomeconta}?\n'))
+
+'''for i in [arq_divida]:
+        for j in i:
+          print(j)'''
+
+'''
+pickle.dump(dividas_dicionario, arq_divida)
+arq_divida.close()
+'''
