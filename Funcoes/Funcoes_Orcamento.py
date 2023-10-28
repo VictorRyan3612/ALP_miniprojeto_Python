@@ -127,7 +127,9 @@ def orcamento_editar():
         orcamento += [nomeOrcamento,valor]
         matriz += [orcamento]
       orcamentos_dicionario [mes] = matriz
-        
+
+      with open('orcamento.dat', 'wb') as arq_orcamento:
+        pickle.dump(orcamentos_dicionario, arq_orcamento)
       print('Orçamento alterado com sucesso...')
       orcamento_salvar()
     

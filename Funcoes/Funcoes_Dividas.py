@@ -2,47 +2,66 @@ from Funcoes import Funcoes_Menus
 from os import system
 import pickle
 
-meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','outubro','novembro','dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
+meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
 
 ############## Dividas
 ##### Funções
 
+# Validação de numero ↓
+def validacao_numero(num1):
+  while num1.isdecimal() == False:
+    num1 = input(f'Digite um numero válido!\n')
+  num1 = int(num1)
+  return num1
+''''''
+
+# Validação de Mes
+def validacao_mes():
+  global meses
+  mes = input('As dividas são de qual mês?\n').capitalize()
+
+  if mes.isdecimal() == True:
+    mes = int(mes)
+    if (mes >= 1) and (mes <= 12):
+      mes = meses[mes-1]
+      
+  while mes not in meses:
+    mes = input('Digite um mês válido!\n')
+    if mes.isdecimal() == True:
+      mes = int(mes)
+      if (mes >= 1) and (mes <= 12):
+        mes = meses[mes-1]
+      else:
+        mes = input('Digite um mês válido!\n').capitalize()
+  return mes
+''''''
+
+# Salvar
+def divida_salvar():
+  with open('divida.dat', 'wb') as arq_divida:
+    pickle.dump(dividas_dicionario, arq_divida)
+''''''
+
+# Carregar
+def divida_carregar():
+  with open('divida.dat', 'rb') as arq_divida:
+    dividas_dicionario = pickle.load(arq_divida)
+''''''
+
 # Cadastrar
 def divida_cadastrar():
   global dividas_dicionario
-  global meses
-
-  
-  # Validação de mes
-  mes = input('As dividas são de qual mês?\n')
-  mes.capitalize()
-  if mes.isnumeric() and (mes != '0'):
-    mes = int(mes)
-    mes = meses[mes-1]
-    print('\n')
-  while mes not in meses:
-    mes = input(f'Digite um mês válido:\n').capitalize()
-    if mes.isnumeric() and (mes != '0'):
-      mes = int(mes)
-      mes = meses[mes-1]
-      print('\n')
-
+  mes = validacao_mes()
       
-
-  # Validação de Quantidade de dividas
   Q_dividas = input(f'Quantas dividas você quer cadastrar?\n')
-  Q_dividas_B = Q_dividas.isnumeric()
-  while Q_dividas_B == False:
-    Q_dividas = input(f'Digite um numero válido:\n')
-    Q_dividas_B = Q_dividas.isnumeric()
-  Q_dividas = int(Q_dividas)
+  Q_dividas = validacao_numero(Q_dividas)
     
   matriz = []
 
 
   
    # mes ainda não existe no dicionário ↓
-  if mes not in dividas_dicionario: # mes ainda não existe no dicionário
+  if mes not in dividas_dicionario:
     for i in range(1, Q_dividas + 1):
       divida = []
       print('\n')
@@ -53,11 +72,7 @@ def divida_cadastrar():
         
       # Validação de valor
       valor = input(f'Quanto é o valor de {nomeDivida}?\n')
-      valor_B = valor.isnumeric()
-      while valor_B == False:
-        valor = input(f'Digite um valor válido:\n')
-        valor_B = valor.isnumeric()
-      valor = int(valor)
+      valor = validacao_numero(valor)
 
       
     
@@ -71,74 +86,50 @@ def divida_cadastrar():
     for i in range(1, Q_dividas + 1):
       divida = []
       nomeDivida = input(f'Nome da dívida {i}:\n')
-
-
       valor = input(f'Quanto é o valor de {nomeDivida}?\n')
-      valor_B = valor.isnumeric()
-      while valor_B == False:
-        valor = input(f'Digite um valor válido:\n')
-        valor_B = valor.isnumeric()
-      valor = int(valor)
+      valor = validacao_numero(valor)
       
-    with open('divida.dat', 'rb') as arq_divida:
-      dividas_dicionario = pickle.load(arq_divida)
-    
+    divida_carregar()
   
     matriz += dividas_dicionario[mes]
     divida += [nomeDivida,valor]
     matriz.extend([divida])
     
-  
-    
   dividas_dicionario [mes] = matriz
   
-  with open('divida.dat', 'wb') as arq_divida:
-    pickle.dump(dividas_dicionario, arq_divida)
+  divida_salvar()
     
   input('Tecle ENTER para continuar!')
 ''''''
 
-# Salvar
-def divida_salvar():
-  with open('divida.dat', 'wb') as arq_divida:
-    pickle.dump(dividas_dicionario, arq_divida)
-
+# Vizualizar
 def divida_vizualizar():
-  print('Todas as dívidas:\n')
   try:
-    with open('divida.dat', 'rb') as arq_divida:
-      dividas_dicionario = pickle.load(arq_divida) 
-      
-      for mes in dividas_dicionario.keys():
-        print(f'{mes}: = {dividas_dicionario[mes]}')
+    print('Todas as dívidas:\n')
+    divida_carregar()
+    for mes in dividas_dicionario.keys():
+      print(f'{mes}:\t{dividas_dicionario[mes]}')
   except:
     print('Não há dívidas registradas')
 		
   print('\n')
-  input('Aperte ENTER para continuar\n')
 ''''''
 
 # Pesquisar
 def divida_pesquisar():
   print('Pesquisa')
   print('\n')
-  mes = input('Digite o mês buscar:\n')
-  try:
-    achou = False
-    if mes in dividas_dicionario:
-      achou = True
-    
-      print('\n')
-      print('Mês:\t',mes)
-      print('Conta:\t',dividas_dicionario[mes][0])
-      print('Valor:\t', dividas_dicionario[mes][1])
-      print('\n')
-    
-    else:
-      achou = False
-    if achou == False:
-      print('Mês não encontrato!')
-  except:
+  mes = validacao_mes()
+  
+  if mes in dividas_dicionario:
+  
+    print('\n')
+    print('Mês:\t',mes)
+    print('Conta:\t',dividas_dicionario[mes][0])
+    print('Valor:\t', dividas_dicionario[mes][1])
+    print('\n')
+  
+  else:
     print('Mês não encontrato!')
   
   input('Aperte ENTER para continuar\n')
@@ -148,28 +139,39 @@ def divida_pesquisar():
 def divida_editar():
   print('\n')
   divida_vizualizar()
-  mes = input('Mês da conta que deseja alterar:\n')
-  print('\n')
+  mes = validacao_mes()
 
-  try:
-    achou = False
+  divida_carregar()
+  matriz = dividas_dicionario[mes]
+  
+  if mes in dividas_dicionario:
+    #print(f'No mes {mes} tem essas dividas:\n{dividas_dicionario[mes]}')
     
-    if mes in dividas_dicionario:
-      achou = True
+    q_qual_divida = input('Quantas deseja alterar?\n')
+    q_qual_divida = validacao_numero(q_qual_divida)
+    
+    for i in range (1,q_qual_divida+1):
+      editar = []
+      qual_divida = input('Qual deseja alterar?\n')
+      qual_divida = validacao_numero(qual_divida)
+      qual_divida -= 1
+      matriz.pop(qual_divida)        
       
       nomeDivida = input('Novo nome da conta:\n')
-      valor = input('Novo valor da conta:\n')
-      dividas_dicionario[mes] = [nomeDivida, valor]
-      print('Conta alterado com sucesso...')
-      divida_salvar()
       
-    else:
-      achou = False
-    if achou == False:
-      print('Mês não encontrato!')
-  except:
-    print('Mês não encontrato!')
+      valor = input('Novo valor da conta:\n')
+      valor = validacao_numero(valor)
+      
+      editar = [nomeDivida, valor]
+      matriz.insert(qual_divida,editar)
+      
+    dividas_dicionario[mes] = matriz
+    divida_salvar()
+
+    print('Conta alterada com sucesso...')
     
+  else:
+    print('Mês não encontrato!')
   input('Tecle ENTER para continuar!')
 ''''''  
 
@@ -177,22 +179,19 @@ def divida_editar():
 def divida_excluir():
   print('\n')
   divida_vizualizar()
-  mes = input('Nome do mes a excluir:\n')
+  mes = validacao_mes()
   
   try:
-    achou = False
     if mes in dividas_dicionario:
-      achou = True
     
       del dividas_dicionario[mes]
       print('Mês excluído com sucesso...')
       divida_salvar()
+      
     else:
-      achou = False
-    if achou == False:
       print('Mês não encontrado!')
   except:
-    print('Mês não encontrado!')
+    print('Ocorreu algum problema')
     
   input('Tecle ENTER para continuar!')
 
@@ -229,6 +228,7 @@ def modulo_divida():
 
     elif operacao == '2':
       divida_vizualizar()
+      input('Aperte ENTER para continuar\n')
       system('clear')
 
     elif operacao == '3':
@@ -247,4 +247,3 @@ def modulo_divida():
     else:
       system('clear')
       print('Digite uma operação válida!')
-      
