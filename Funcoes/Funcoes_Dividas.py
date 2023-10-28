@@ -10,7 +10,7 @@ meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto'
 # Validação de numero ↓
 def validacao_numero(num1):
   while num1.isdecimal() == False:
-    num1 = input(f'Digite um numero válido!\n')
+    num1 = input(f'Digite um número válido!\n')
   num1 = int(num1)
   return num1
 ''''''
@@ -18,7 +18,7 @@ def validacao_numero(num1):
 # Validação de Mes
 def validacao_mes():
   global meses
-  mes = input('As dividas são de qual mês?\n').capitalize()
+  mes = input('As dívidas são de qual mês?\n').capitalize()
 
   if mes.isdecimal() == True:
     mes = int(mes)
@@ -32,7 +32,7 @@ def validacao_mes():
       if (mes >= 1) and (mes <= 12):
         mes = meses[mes-1]
       else:
-        mes = input('Digite um mês válido!\n').capitalize()
+        mes = input(f'Digite um mês válido!\n').capitalize()
   return mes
 ''''''
 
@@ -42,18 +42,12 @@ def divida_salvar():
     pickle.dump(dividas_dicionario, arq_divida)
 ''''''
 
-# Carregar
-def divida_carregar():
-  with open('divida.dat', 'rb') as arq_divida:
-    dividas_dicionario = pickle.load(arq_divida)
-''''''
-
 # Cadastrar
 def divida_cadastrar():
   global dividas_dicionario
   mes = validacao_mes()
       
-  Q_dividas = input(f'Quantas dividas você quer cadastrar?\n')
+  Q_dividas = input(f'Quantas dívidas você quer cadastrar?\n')
   Q_dividas = validacao_numero(Q_dividas)
     
   matriz = []
@@ -67,16 +61,16 @@ def divida_cadastrar():
       print('\n')
 
       
-      nomeDivida = input(f'Nome da dívida {i}:\n')
+      nome_Divida = input(f'Nome da dívida {i}:\n')
 
         
       # Validação de valor
-      valor = input(f'Quanto é o valor de {nomeDivida}?\n')
+      valor = input(f'Quanto é o valor de {nome_Divida}?\n')
       valor = validacao_numero(valor)
 
       
     
-      divida += [nomeDivida,valor]
+      divida += [nome_Divida,valor]
       matriz += [divida]
 
       
@@ -85,14 +79,13 @@ def divida_cadastrar():
     print('\n')
     for i in range(1, Q_dividas + 1):
       divida = []
-      nomeDivida = input(f'Nome da dívida {i}:\n')
-      valor = input(f'Quanto é o valor de {nomeDivida}?\n')
+      nome_Divida = input(f'Nome da dívida {i}:\n')
+      valor = input(f'Quanto é o valor de {nome_Divida}?\n')
       valor = validacao_numero(valor)
       
-    divida_carregar()
   
     matriz += dividas_dicionario[mes]
-    divida += [nomeDivida,valor]
+    divida += [nome_Divida,valor]
     matriz.extend([divida])
     
   dividas_dicionario [mes] = matriz
@@ -104,9 +97,10 @@ def divida_cadastrar():
 
 # Vizualizar
 def divida_vizualizar():
+  global dividas_dicionario
   try:
     print('Todas as dívidas:\n')
-    divida_carregar()
+
     for mes in dividas_dicionario.keys():
       print(f'{mes}:\t{dividas_dicionario[mes]}')
   except:
@@ -117,6 +111,7 @@ def divida_vizualizar():
 
 # Pesquisar
 def divida_pesquisar():
+  global dividas_dicionario
   print('Pesquisa')
   print('\n')
   mes = validacao_mes()
@@ -137,15 +132,18 @@ def divida_pesquisar():
 
 # Editar
 def divida_editar():
+  global dividas_dicionario
   print('\n')
   divida_vizualizar()
   mes = validacao_mes()
 
-  divida_carregar()
-  matriz = dividas_dicionario[mes]
+
+  
   
   if mes in dividas_dicionario:
-    #print(f'No mes {mes} tem essas dividas:\n{dividas_dicionario[mes]}')
+    matriz = dividas_dicionario[mes]
+    print(f'No mes {mes} tem essas dividas:\n{dividas_dicionario[mes]}')
+    print('\n')
     
     q_qual_divida = input('Quantas deseja alterar?\n')
     q_qual_divida = validacao_numero(q_qual_divida)
@@ -157,12 +155,12 @@ def divida_editar():
       qual_divida -= 1
       matriz.pop(qual_divida)        
       
-      nomeDivida = input('Novo nome da conta:\n')
+      nome_Divida = input('Novo nome da dívida:\n')
       
-      valor = input('Novo valor da conta:\n')
+      valor = input('Novo valor da dívida:\n')
       valor = validacao_numero(valor)
       
-      editar = [nomeDivida, valor]
+      editar = [nome_Divida, valor]
       matriz.insert(qual_divida,editar)
       
     dividas_dicionario[mes] = matriz
@@ -177,6 +175,7 @@ def divida_editar():
 
 # Excluir
 def divida_excluir():
+  global dividas_dicionario
   print('\n')
   divida_vizualizar()
   mes = validacao_mes()

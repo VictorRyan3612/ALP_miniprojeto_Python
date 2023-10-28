@@ -2,54 +2,38 @@ from Funcoes import Funcoes_Menus
 from os import system
 import pickle
 
+meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
 
+############## Orcamentos
+##### Funções
 
-############## orcamentos
-## Funções
+# Validação de numero ↓
+def validacao_numero(num1):
+  while num1.isdecimal() == False:
+    num1 = input(f'Digite um número válido!\n')
+  num1 = int(num1)
+  return num1
+''''''
 
-#Cadastrar
-def orcamento_cadastrar():
-  global orcamentos_dicionario
-  
-  mes = input('Os orçamentos são de qual mês?\n')
-  
-  Q_orcamentos = int(input(f'Quantas orçamentos você quer cadastrar?\n'))
-  
-  
-  matriz = []
-  if mes not in orcamentos_dicionario:
-    for i in range(1, Q_orcamentos + 1):
-      orcamento = []
-      print('\n')
-      nomeOrcamento = input(f'Nome da orçamento {i}:\n')
-      valor = int(input(f'Quanto é o valor de {nomeOrcamento}?\n'))
-  
-    
-      orcamento += [nomeOrcamento,valor]
-      matriz += [orcamento]
-  else:
-    print('\n')
-    for i in range(1, Q_orcamentos + 1):
-      orcamento = []
-      nomeOrcamento = input(f'Nome da orçamento {i}:\n')
-      valor = int(input(f'Quanto é o valor de {nomeOrcamento}?\n'))
+# Validação de Mes
+def validacao_mes():
+  global meses
+  mes = input('Os orçamentos são de qual mês?\n').capitalize()
+
+  if mes.isdecimal() == True:
+    mes = int(mes)
+    if (mes >= 1) and (mes <= 12):
+      mes = meses[mes-1]
       
-    with open('orcamento.dat', 'rb') as arq_orcamento:
-      orcamentos_dicionario = pickle.load(arq_orcamento)
-    
-  
-    matriz += orcamentos_dicionario[mes]
-    orcamento += [nomeOrcamento,valor]
-    matriz.extend([orcamento])
-    
-  
-    
-  orcamentos_dicionario [mes] = matriz
-  
-  with open('orcamento.dat', 'wb') as arq_orcamento:
-    pickle.dump(orcamentos_dicionario, arq_orcamento)
-    
-  input('Tecle ENTER para continuar!')
+  while mes not in meses:
+    mes = input('Digite um mês válido!\n')
+    if mes.isdecimal() == True:
+      mes = int(mes)
+      if (mes >= 1) and (mes <= 12):
+        mes = meses[mes-1]
+      else:
+        mes = input(f'Digite um mês válido!\n').capitalize()
+  return mes
 ''''''
 
 # Salvar
@@ -57,112 +41,155 @@ def orcamento_salvar():
   with open('orcamento.dat', 'wb') as arq_orcamento:
     pickle.dump(orcamentos_dicionario, arq_orcamento)
 ''''''
+
+# Cadastrar
+def orcamento_cadastrar():
+  global orcamentos_dicionario
+  mes = validacao_mes()
+      
+  Q_orcamentos = input(f'Quantos orçamentos você quer cadastrar?\n')
+  Q_orcamentos = validacao_numero(Q_orcamentos)
     
+  matriz = []
+
+
+  
+   # mes ainda não existe no dicionário ↓
+  if mes not in orcamentos_dicionario:
+    for i in range(1, Q_orcamentos + 1):
+      orcamento = []
+      print('\n')
+
+      
+      nome_Orcamento = input(f'Nome do orçamento {i}:\n')
+
+        
+      # Validação de valor
+      valor = input(f'Quanto é o valor de {nome_Orcamento}?\n')
+      valor = validacao_numero(valor)
+
+      
+    
+      orcamento += [nome_Orcamento,valor]
+      matriz += [orcamento]
+
+      
+    # mes já existe no dicionário ↓
+  else:
+    print('\n')
+    for i in range(1, Q_orcamentos + 1):
+      orcamento = []
+      nome_Orcamento = input(f'Nome do orçamento {i}:\n')
+      valor = input(f'Quanto é o valor de {nome_Orcamento}?\n')
+      valor = validacao_numero(valor)
+      
+  
+    matriz += orcamentos_dicionario[mes]
+    orcamento += [nome_Orcamento,valor]
+    matriz.extend([orcamento])
+    
+  orcamentos_dicionario [mes] = matriz
+  
+  orcamento_salvar()
+    
+  input('Tecle ENTER para continuar!')
+''''''
+
 # Vizualizar
 def orcamento_vizualizar():
-  print('Todas as orçamentos:\n')
+  global orcamentos_dicionario
   try:
-    with open('orcamento.dat', 'rb') as arq_orcamento:
-      orcamentos_dicionario = pickle.load(arq_orcamento) 
-      
-      for mes in orcamentos_dicionario:
-        print(f'{mes}: = {orcamentos_dicionario[mes]}')
+    print('Todas os orçamentos:\n')
+
+    for mes in orcamentos_dicionario.keys():
+      print(f'{mes}:\t{orcamentos_dicionario[mes]}')
   except:
     print('Não há orçamentos registrados')
 		
   print('\n')
-  input('Aperte ENTER para continuar\n')
 ''''''
 
 # Pesquisar
 def orcamento_pesquisar():
+  global orcamentos_dicionario
   print('Pesquisa')
   print('\n')
-  mes = input('Digite o mês a buscar:\n')
-
-  try:
-    achou = False
-    if mes in orcamentos_dicionario:
-      achou = True
-      
-      print('\n')
-      print('Mês:\t',mes)
-      print('Conta:\t',orcamentos_dicionario[mes][0][0])
-      print('Valor:\t', orcamentos_dicionario[mes][0][1])
-      print('\n')
-      
-    else:
-      achou = False
-    if achou == False:
-      print('Mês não encontrado')
-  except:
-    print('Mês não encontrado')
+  mes = validacao_mes()
+  
+  if mes in orcamentos_dicionario:
+  
+    print('\n')
+    print('Mês:\t',mes)
+    print('Orçamento:\t',orcamentos_dicionario[mes][0])
+    print('Valor:\t', orcamentos_dicionario[mes][1])
+    print('\n')
+  
+  else:
+    print('Mês não encontrato!')
+  
   input('Aperte ENTER para continuar\n')
 ''''''
-  
+
 # Editar
 def orcamento_editar():
+  global orcamentos_dicionario
   print('\n')
   orcamento_vizualizar()
-  mes = input('Mês da conta que deseja alterar:\n')
-  print('\n')
+  mes = validacao_mes()
 
-  with open('orcamento.dat', 'rb') as arq_orcamento:
-    orcamentos_dicionario = pickle.load(arq_orcamento)
+  
+  if mes in orcamentos_dicionario:
+    matriz = orcamentos_dicionario[mes]
+    print(f'No mes {mes} tem essas orcamentos:\n{orcamentos_dicionario[mes]}')
+    print('\n')
     
-  try:
-    achou = False
-    if mes in orcamentos_dicionario:
-      achou = True
-     
+    q_qual_orcamento = input('Quantas deseja alterar?\n')
+    q_qual_orcamento = validacao_numero(q_qual_orcamento)
+    
+    for i in range (1,q_qual_orcamento+1):
+      editar = []
+      qual_orcamento = input('Qual deseja alterar?\n')
+      qual_orcamento = validacao_numero(qual_orcamento)
+      qual_orcamento -= 1
+      matriz.pop(qual_orcamento)        
       
-        
-      matriz = []
-      for i in orcamentos_dicionario[mes]:
-        orcamento = []
-        nomeOrcamento = input('Novo nome do orçamento:\n')
-        valor = input('Novo valor da orçamento:\n')
+      nome_Orcamento = input('Novo nome do orçamento:\n')
+      
+      valor = input('Novo valor do orçamento:\n')
+      valor = validacao_numero(valor)
+      
+      editar = [nome_Orcamento, valor]
+      matriz.insert(qual_orcamento,editar)
+      
+    orcamentos_dicionario[mes] = matriz
+    orcamento_salvar()
 
-  
-        orcamento += [nomeOrcamento,valor]
-        matriz += [orcamento]
-      orcamentos_dicionario [mes] = matriz
-
-      with open('orcamento.dat', 'wb') as arq_orcamento:
-        pickle.dump(orcamentos_dicionario, arq_orcamento)
-      print('Orçamento alterado com sucesso...')
-      orcamento_salvar()
+    print('Conta alterada com sucesso...')
     
-    else:
-      achou = False
-    print()
-    if achou == False:
-      print('Mês não encontrado')
-  except:
-    print('Mês não encontrado')
-  input('Aperte ENTER para continuar\n')
-''''''
-  
+  else:
+    print('Mês não encontrato!')
+  input('Tecle ENTER para continuar!')
+''''''  
+
 # Excluir
 def orcamento_excluir():
+  global orcamentos_dicionario
   print('\n')
   orcamento_vizualizar()
-  mes = input('Mês do orçamento a excluir:\n')
+  mes = validacao_mes()
   
   try:
-    achou = False
     if mes in orcamentos_dicionario:
-      achou = True
     
       del orcamentos_dicionario[mes]
       print('Mês excluído com sucesso...')
       orcamento_salvar()
+      
     else:
-      achou = False
-    if achou == False:
       print('Mês não encontrado!')
   except:
-    print('Mês não encontrado!')
+    print('Ocorreu algum problema')
+    
   input('Tecle ENTER para continuar!')
 
 ''''''
@@ -188,7 +215,7 @@ def modulo_orcamento():
   system('clear')
   operacao = ''
   while operacao != '0':
-    Funcoes_Menus.menu_Orcamento()
+    Funcoes_Menus.menu_Orcamentos()
     operacao = input('Selecione o que quer fazer:\n')
     print('\n')
 
@@ -198,6 +225,7 @@ def modulo_orcamento():
 
     elif operacao == '2':
       orcamento_vizualizar()
+      input('Aperte ENTER para continuar\n')
       system('clear')
 
     elif operacao == '3':

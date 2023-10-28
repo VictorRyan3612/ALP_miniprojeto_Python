@@ -2,52 +2,38 @@ from Funcoes import Funcoes_Menus
 from os import system
 import pickle
 
+meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
 
+############## Despesas
+##### Funções
 
-############## despesas
-## Funções
+# Validação de numero ↓
+def validacao_numero(num1):
+  while num1.isdecimal() == False:
+    num1 = input('Digite um número válido!\n')
+  num1 = int(num1)
+  return num1
+''''''
 
-# Cadastrar
-def despesa_cadastrar():
-  global despesas_dicionario
-  
-  mes = input('As despesas são de qual mês?\n')
-  Q_despesas = int(input(f'Quantas despesas você quer cadastrar?\n'))
-  
-  matriz = []
-  if mes not in despesas_dicionario:
-    for i in range(1, Q_despesas + 1):
-      despesa = []
-      print('\n')
-      nomeDespesa = input(f'Nome da despesa {i}:\n')
-      valor = int(input(f'Quanto é o valor de {nomedespesa}?\n'))
-  
-    
-      despesa += [nomeDespesa,valor]
-      matriz += [despesa]
-  else:
-    print('\n')
-    for i in range(1, Q_despesas + 1):
-      despesa = []
-      nomedespesa = input(f'Nome da despesa {i}:\n')
-      valor = int(input(f'Quanto é o valor de {nomedespesa}?\n'))
+# Validação de Mes
+def validacao_mes():
+  global meses
+  mes = input('As despesas são de qual mês?\n').capitalize()
+
+  if mes.isdecimal() == True:
+    mes = int(mes)
+    if (mes >= 1) and (mes <= 12):
+      mes = meses[mes-1]
       
-    with open('despesa.dat', 'rb') as arq_despesa:
-      despesas_dicionario = pickle.load(arq_despesa)
-    
-  
-    matriz += despesas_dicionario[mes]
-    despesa += [nomedespesa,valor]
-    matriz.extend([despesa])
-    
-  
-    
-  despesas_dicionario [mes] = matriz
-  
-  with open('despesa.dat', 'wb') as arq_despesa:
-    pickle.dump(despesas_dicionario, arq_despesa)
-    
-  input('Tecle ENTER para continuar!')
+  while mes not in meses:
+    mes = input('Digite um mês válido!\n')
+    if mes.isdecimal() == True:
+      mes = int(mes)
+      if (mes >= 1) and (mes <= 12):
+        mes = meses[mes-1]
+      else:
+        mes = input('Digite um mês válido!\n').capitalize()
+  return mes
 ''''''
 
 # Salvar
@@ -56,101 +42,160 @@ def despesa_salvar():
     pickle.dump(despesas_dicionario, arq_despesa)
 ''''''
 
+# Cadastrar
+def despesa_cadastrar():
+  global despesas_dicionario
+  mes = validacao_mes()
+      
+  Q_despesas = input(f'Quantas despesas você quer cadastrar?\n')
+  Q_despesas = validacao_numero(Q_despesas)
+    
+  matriz = []
+
+
+  
+   # mes ainda não existe no dicionário ↓
+  if mes not in despesas_dicionario:
+    for i in range(1, Q_despesas + 1):
+      despesa = []
+      print('\n')
+
+      
+      nome_Despesa = input(f'Nome da despesa {i}:\n')
+
+        
+      # Validação de valor
+      valor = input(f'Quanto é o valor de {nome_Despesa}?\n')
+      valor = validacao_numero(valor)
+
+      
+    
+      despesa += [nome_Despesa,valor]
+      matriz += [despesa]
+
+      
+    # mes já existe no dicionário ↓
+  else:
+    print('\n')
+    for i in range(1, Q_despesas + 1):
+      despesa = []
+      nome_Despesa = input(f'Nome da despesa {i}:\n')
+      valor = input(f'Quanto é o valor de {nome_Despesa}?\n')
+      valor = validacao_numero(valor)
+      
+  
+    matriz += despesas_dicionario[mes]
+    despesa += [nome_Despesa,valor]
+    matriz.extend([despesa])
+    
+  despesas_dicionario [mes] = matriz
+  
+  despesa_salvar()
+    
+  input('Tecle ENTER para continuar!')
+''''''
+
 # Vizualizar
 def despesa_vizualizar():
-  print('Todas as despesas:\n')
+  global despesas_dicionario
   try:
-    with open('despesa.dat', 'rb') as arq_despesa:
-      despesas_dicionario = pickle.load(arq_despesa) 
-      
-      for mes in despesas_dicionario:
-        print(f'{mes}: = {despesas_dicionario[mes]}')
+    print('Todas as despesas:\n')
+
+    for mes in despesas_dicionario.keys():
+      print(f'{mes}:\t{despesas_dicionario[mes]}')
   except:
     print('Não há despesas registradas')
 		
   print('\n')
-  input('Aperte ENTER para continuar\n')
 ''''''
 
-### Pesquisar
+# Pesquisar
 def despesa_pesquisar():
+  global despesas_dicionario
   print('Pesquisa')
   print('\n')
-  mes = input('Digite o mês buscar:\n')
-
-  try:
-    achou = False
-    if mes in despesas_dicionario:
-      achou = True
-      
-      print('\n')
-      print('Mês:\t',mes)
-      print('Conta:\t',despesas_dicionario[mes][0][0])
-      print('Valor:\t', despesas_dicionario[mes][0][1])
-      print('\n')
-      
-    else:
-      achou = False
-    if achou == False:
-      print('Mês não encontrado')
-  except:
-    print('Mês não encontrado')
+  mes = validacao_mes()
+  
+  if mes in despesas_dicionario:
+  
+    print('\n')
+    print('Mês:\t',mes)
+    print('Conta:\t',despesas_dicionario[mes][0])
+    print('Valor:\t', despesas_dicionario[mes][1])
+    print('\n')
+  
+  else:
+    print('Mês não encontrato!')
+  
   input('Aperte ENTER para continuar\n')
 ''''''
 
 # Editar
 def despesa_editar():
+  global despesas_dicionario
   print('\n')
   despesa_vizualizar()
-  mes = input('Mês da conta que deseja alterar:\n')
-  print('\n')
+  mes = validacao_mes()
 
-  try:
-    achou = False
-    if mes in despesas_dicionario:
-      achou = True
-      
-      nomedespesa = input('Novo nome da conta:\n')
-      valor = input('Novo valor da conta:\n')
-      despesas_dicionario[mes] = [nomedespesa, valor]
-      print('Conta alterado com sucesso...')
-      despesa_salvar()
+
+  
+  
+  if mes in despesas_dicionario:
+    matriz = despesas_dicionario[mes]
+    print(f'No mes {mes} tem essas despesas:\n{despesas_dicionario[mes]}')
+    print('\n')
     
-    else:
-      achou = False
-    print()
-    if achou == False:
-      print('Mês não encontrado')
-  except:
-    print('Mês não encontrado')
-  input('Aperte ENTER para continuar\n')
-''''''
+    q_qual_despesa = input('Quantas deseja alterar?\n')
+    q_qual_despesa = validacao_numero(q_qual_despesa)
+    
+    for i in range (1,q_qual_despesa+1):
+      editar = []
+      
+      qual_despesa = input('Qual deseja alterar?\n')
+      qual_despesa = validacao_numero(qual_despesa)
+      qual_despesa -= 1
+      matriz.pop(qual_despesa)        
+      
+      nome_Despesa = input('Novo nome da despesa:\n')
+      
+      valor = input('Novo valor da despesa:\n')
+      valor = validacao_numero(valor)
+      
+      editar = [nome_Despesa, valor]
+      matriz.insert(qual_despesa,editar)
+      
+    despesas_dicionario[mes] = matriz
+    despesa_salvar()
+
+    print('Conta alterada com sucesso...')
+    
+  else:
+    print('Mês não encontrato!')
+  input('Tecle ENTER para continuar!')
+''''''  
 
 # Excluir
 def despesa_excluir():
+  global despesas_dicionario
   print('\n')
   despesa_vizualizar()
-  mes = input('Nome da conta a excluir:\n')
+  mes = validacao_mes()
   
   try:
-    achou = False
     if mes in despesas_dicionario:
-      achou = True
     
       del despesas_dicionario[mes]
       print('Mês excluído com sucesso...')
       despesa_salvar()
+      
     else:
-      achou = False
-    if achou == False:
       print('Mês não encontrado!')
   except:
-    print('Mês não encontrado!')
+    print('Ocorreu algum problema')
+    
   input('Tecle ENTER para continuar!')
 
 ''''''
-
-
 
 ##############################
 ##### Programa Principal #####
@@ -183,6 +228,7 @@ def modulo_despesa():
 
     elif operacao == '2':
       despesa_vizualizar()
+      input('Aperte ENTER para continuar\n')
       system('clear')
 
     elif operacao == '3':

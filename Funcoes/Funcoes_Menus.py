@@ -23,7 +23,7 @@ def menu_Principal():
       0 - Encerrar
   ''')
 
-def menu_Orcamento():
+def menu_Orcamentos():
     print('''
     ==============================
           Módulo Orçamento
