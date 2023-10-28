@@ -16,6 +16,8 @@ from os import system
 ########## Programa principal ########
 ######################################
 
+system('clear')
+system('cls')
 
 Funcoes_Menus.informacoes()
 input('Aperte ENTER\n')
@@ -25,7 +27,7 @@ input('Aperte ENTER\n')
 menu = ''
 while menu != '0':
   system('clear')
-  
+  system('cls')
   Funcoes_Menus.menu_Principal()
   menu = input("Escolha sua opção:\n")
 

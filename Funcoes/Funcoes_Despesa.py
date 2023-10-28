@@ -4,6 +4,8 @@ import pickle
 
 meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
 
+
+
 ############## Despesas
 ##### Funções
 
@@ -62,7 +64,7 @@ def despesa_cadastrar():
 
       
       nome_Despesa = input(f'Nome da despesa {i}:\n')
-
+      
         
       # Validação de valor
       valor = input(f'Quanto é o valor de {nome_Despesa}?\n')
@@ -120,9 +122,12 @@ def despesa_pesquisar():
   
     print('\n')
     print('Mês:\t',mes)
-    print('Conta:\t',despesas_dicionario[mes][0])
-    print('Valor:\t', despesas_dicionario[mes][1])
-    print('\n')
+    j=0
+    for i in despesas_dicionario[mes]:
+
+      print('Conta:\t',despesas_dicionario[mes][j][0],end='')
+      print('\tValor:\t', despesas_dicionario[mes][j][1],)
+      j+=1
   
   else:
     print('Mês não encontrato!')
@@ -216,6 +221,7 @@ except:
 
 def modulo_despesa():
   system('clear')
+  system('cls')
   operacao = ''
   while operacao != '0':
     Funcoes_Menus.menu_Despesas()
@@ -225,25 +231,32 @@ def modulo_despesa():
     if operacao == '1':
       despesa_cadastrar()
       system('clear')
+      system('cls')
 
     elif operacao == '2':
       despesa_vizualizar()
       input('Aperte ENTER para continuar\n')
       system('clear')
+      system('cls')
 
     elif operacao == '3':
       despesa_pesquisar()
       system('clear')
+      system('cls')
 
     elif operacao == '4':
       despesa_editar()
       system('clear')
+      system('cls')
       
     elif operacao == '5':
       despesa_excluir()
       system('clear')
+      system('cls')
     elif operacao == '0':
       system('clear')
+      system('cls')
     else:
       system('clear')
+      system('cls')
       print('Digite uma operação válida!')

@@ -4,6 +4,8 @@ import pickle
 
 meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
 
+
+
 ############## Dividas
 ##### Funções
 
@@ -215,6 +217,7 @@ except:
 
 def modulo_divida():
   system('clear')
+  system('cls')
   operacao = ''
   while operacao != '0':
     Funcoes_Menus.menu_Dividas()
@@ -224,25 +227,32 @@ def modulo_divida():
     if operacao == '1':
       divida_cadastrar()
       system('clear')
+      system('cls')
 
     elif operacao == '2':
       divida_vizualizar()
       input('Aperte ENTER para continuar\n')
       system('clear')
+      system('cls')
 
     elif operacao == '3':
       divida_pesquisar()
       system('clear')
+      system('cls')
 
     elif operacao == '4':
       divida_editar()
       system('clear')
+      system('cls')
       
     elif operacao == '5':
       divida_excluir()
       system('clear')
+      system('cls')
     elif operacao == '0':
       system('clear')
+      system('cls')
     else:
       system('clear')
+      system('cls')
       print('Digite uma operação válida!')

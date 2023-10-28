@@ -4,6 +4,8 @@ import pickle
 
 meses = ('Janeiro','Fevereiro','Março', 'Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro',1,2,3,4,5,6,7,8,9,10,11,12)
 
+
+
 ############## Orcamentos
 ##### Funções
 
@@ -213,6 +215,7 @@ except:
 
 def modulo_orcamento():
   system('clear')
+  system('cls')
   operacao = ''
   while operacao != '0':
     Funcoes_Menus.menu_Orcamentos()
@@ -222,25 +225,32 @@ def modulo_orcamento():
     if operacao == '1':
       orcamento_cadastrar()
       system('clear')
+      system('cls')
 
     elif operacao == '2':
       orcamento_vizualizar()
       input('Aperte ENTER para continuar\n')
       system('clear')
+      system('cls')
 
     elif operacao == '3':
       orcamento_pesquisar()
       system('clear')
+      system('cls')
 
     elif operacao == '4':
       orcamento_editar()
       system('clear')
+      system('cls')
       
     elif operacao == '5':
       orcamento_excluir()
       system('clear')
+      system('cls')
     elif operacao == '0':
       system('clear')
+      system('cls')
     else:
       system('clear')
+      system('cls')
       print('Digite uma operação válida!')
